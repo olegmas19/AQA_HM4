@@ -3,11 +3,13 @@ import os
 from selene import browser, have, be
 
 
-#def get_image_path()
-
 def test_filling_sending_forms():
     browser.open('/')
+    # Для мест, где есть баннеры.
+    browser.driver.execute_script("$('#fixedban').remove()")
+    browser.driver.execute_script("$('footer').remove()")
     browser.should(have.title('DEMOQA'))
+
     browser.element('#firstName').should(be.blank).type('Иван')
     browser.element('#lastName').should(be.blank).type('Иванов')
     browser.element('#userEmail').should(be.blank).type('Ivan@mail.ru')
@@ -21,12 +23,12 @@ def test_filling_sending_forms():
     browser.element('[for="hobbies-checkbox-1"]').click()
     browser.element('[for="hobbies-checkbox-2"]').click()
     browser.element('[for="hobbies-checkbox-3"]').click()
-
-    browser.element('#uploadPicture').send_keys(os.path.abspath('/Users/olegmaslennikov/PycharmProjects/AQA_HM4/data/IMG_1332.JPEG'))
+    browser.element('#uploadPicture').send_keys(os.path.abspath('../data/IMG_1332.JPEG'))
     browser.element('#currentAddress').should(be.blank).type('Россия, г. Сызрань, Солнечная ул., д. 12 кв.137')
     browser.element('#state').click().element('#react-select-3-option-0').click()
     browser.element('#city').click().element('#react-select-4-option-0').click()
     browser.element('#submit').click()
+
 
     browser.element('.table').should(have.text('Иван Иванов'))
     browser.element('.table').should(have.text('Ivan@mail.ru'))
@@ -38,7 +40,6 @@ def test_filling_sending_forms():
     browser.element('.table').should(have.text('IMG_1332.JPEG'))
     browser.element('.table').should(have.text('Россия, г. Сызрань, Солнечная ул., д. 12 кв.137'))
     browser.element('.table').should(have.text('NCR Delhi'))
-
     browser.element('#closeLargeModal').click()
 
 
