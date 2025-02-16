@@ -2,6 +2,9 @@ from datetime import datetime
 import os
 from selene import browser, have, be
 
+
+#def get_image_path()
+
 def test_filling_sending_forms():
     browser.open('/')
     browser.should(have.title('DEMOQA'))
@@ -18,7 +21,8 @@ def test_filling_sending_forms():
     browser.element('[for="hobbies-checkbox-1"]').click()
     browser.element('[for="hobbies-checkbox-2"]').click()
     browser.element('[for="hobbies-checkbox-3"]').click()
-    browser.element('#uploadPicture').send_keys(os.path.abspath('/Users/olegmaslennikov/Downloads/image_2025-01-23_14-58-15.png'))
+
+    browser.element('#uploadPicture').send_keys(os.path.abspath('/Users/olegmaslennikov/PycharmProjects/AQA_HM4/data/IMG_1332.JPEG'))
     browser.element('#currentAddress').should(be.blank).type('Россия, г. Сызрань, Солнечная ул., д. 12 кв.137')
     browser.element('#state').click().element('#react-select-3-option-0').click()
     browser.element('#city').click().element('#react-select-4-option-0').click()
@@ -31,7 +35,7 @@ def test_filling_sending_forms():
     browser.element('.table').should(have.text('29 February,1992'))
     browser.element('.table').should(have.text('History'))
     browser.element('.table').should(have.text('Sports, Reading, Music'))
-    browser.element('.table').should(have.text('image_2025-01-23_14-58-15.png'))
+    browser.element('.table').should(have.text('IMG_1332.JPEG'))
     browser.element('.table').should(have.text('Россия, г. Сызрань, Солнечная ул., д. 12 кв.137'))
     browser.element('.table').should(have.text('NCR Delhi'))
 
