@@ -2,6 +2,7 @@ from aqa_hm4_demoqa_tests.registration_page import RegistrationPage
 
 
 def test_filling_sending_forms():
+    #  ivan = User(first_name='Иван', last_name='Иванов', email='Ivan@mail.ru', pnonenumber):
     registration_page = RegistrationPage()
     # GIVEN
     registration_page.open()
@@ -10,7 +11,7 @@ def test_filling_sending_forms():
     registration_page.fill_first_name('Иван')
     registration_page.fill_last_name('Иванов')
     registration_page.fill_email('Ivan@mail.ru')
-    registration_page.fill_gender_male()
+    registration_page.fill_gender_male('Male')
     registration_page.fill_phonenumber('8989567666')
     registration_page.fill_dateOfBirth('February', '29', '1992')
     registration_page.fill_subject('History')

@@ -60,8 +60,8 @@ class RegistrationPage:
     def fill_email(self, email):
         browser.element('#userEmail').should(be.blank).type(email)
 
-    def fill_gender_male(self):
-        browser.element('[name=gender][value=Male]+label').click()
+    def fill_gender_male(self, gender):
+        browser.element(f'[name=gender][value={gender}]+label').click()
 
     def fill_phonenumber(self, number):
         browser.element('#userNumber').should(be.blank).type(number)
