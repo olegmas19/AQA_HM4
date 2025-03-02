@@ -85,14 +85,12 @@ class RegistrationPage:
 
     def fill_address(self, address, state, city):
         browser.element('#currentAddress').should(be.blank).type(address)
-        browser.element('#state').click()
-        browser.all('[id^=react-select][id*=option]').element_by(
-            have.exact_text(state)
-        ).click()
-        browser.element('#city').click()
-        browser.all('[id^=react-select][id*=option]').element_by(
-            have.exact_text(city)
-        ).click()
+        browser.element('#state').click().browser.all(
+            '[id^=react-select][id*=option]'
+        ).element_by(have.exact_text(state)).click()
+        browser.element('#city').click().browser.all(
+            '[id^=react-select][id*=option]'
+        ).element_by(have.exact_text(city)).click()
 
     def fill_submit(self):
         browser.element('#submit').click()
