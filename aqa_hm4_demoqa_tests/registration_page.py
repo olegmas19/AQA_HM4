@@ -1,8 +1,7 @@
 from datetime import datetime
 from selene import browser, have, be
-
 from aqa_hm4_demoqa_tests import resourse
-from aqa_hm4_demoqa_tests.resourse import path
+from aqa_hm4_demoqa_tests.resourse import DATA_DIR
 from tests.conftest import removing_banner
 
 
@@ -81,7 +80,7 @@ class RegistrationPage:
         ).click()
 
     def fill_attachment(self, attachment):
-        browser.element('#uploadPicture').set_value(resourse.path(attachment))
+        browser.element('#uploadPicture').set_value(DATA_DIR + f'/{attachment}')
 
     def fill_address(self, address, state, city):
         browser.element('#currentAddress').should(be.blank).type(address)
