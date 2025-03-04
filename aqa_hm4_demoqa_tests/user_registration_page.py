@@ -1,8 +1,7 @@
 from datetime import datetime
-
 from selene import browser, have, be
-
 from aqa_hm4_demoqa_tests import resourse
+from aqa_hm4_demoqa_tests.resourse import DATA_DIR
 from aqa_hm4_demoqa_tests.user import User
 from tests.conftest import removing_banner
 
@@ -62,7 +61,7 @@ class UserRegistrationPage:
         self.hobbies3.should(have.text(hobbies3)).click()
 
     def fill_attachment(self, attachment):
-        self.attachment.set_value(resourse.path(attachment))
+        self.attachment.set_value(DATA_DIR + f'/{attachment}')
 
     def fill_address(self, address):
         self.current_address.should(be.blank).type(address)
