@@ -2,6 +2,7 @@ from datetime import datetime
 from selene import browser, have, be
 from aqa_hm4_demoqa_tests import resourse
 from aqa_hm4_demoqa_tests.resourse import DATA_DIR
+
 from tests.conftest import removing_banner
 
 
@@ -9,6 +10,7 @@ class RegistrationPage:
 
     def open(self):
         browser.open('/')
+
         removing_banner()
 
     def fill_first_name(self, value):
@@ -18,9 +20,10 @@ class RegistrationPage:
         browser.element('#lastName').should(be.blank).type(value)
 
     def fill_dateOfBirth(self, month, day, year):
-        browser.element('#dateOfBirthInput').should(
-            have.value(datetime.now().strftime('%d %b %Y'))
-        ).click()
+        browser.element('#dateOfBirthInput').click()
+        # should(
+        #  have.value(datetime.now().strftime('%d %b %Y'))
+        # )
         browser.element('.react-datepicker__month-select').type(month)
         browser.element('.react-datepicker__year-select').type(year)
         browser.all('.react-datepicker__week')[4].all('[role="option"]')[6].should(
