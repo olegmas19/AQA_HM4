@@ -3,14 +3,11 @@ import os
 from selene import browser, have, be
 from selenium import webdriver
 
+from data.resourse import DATA_DIR
+
 
 def test_filling_sending_forms():
-    driver_options = webdriver.ChromeOptions()
-    driver_options.page_load_strategy = 'eager'
-    browser.config.driver_options = driver_options
-    browser.open('https://demoqa.com/automation-practice-form')
-    browser.driver.set_window_size(1700, 1280)
-
+    browser.open('/')
     # Для мест, где есть баннеры.
     browser.driver.execute_script("$('#fixedban').remove()")
     browser.driver.execute_script("$('footer').remove()")
@@ -36,9 +33,7 @@ def test_filling_sending_forms():
     browser.element('[for="hobbies-checkbox-1"]').click()
     browser.element('[for="hobbies-checkbox-2"]').click()
     browser.element('[for="hobbies-checkbox-3"]').click()
-    browser.element('#uploadPicture').send_keys(
-        os.path.abspath('../data/IMG_1332.JPEG')
-    )
+    browser.element('#uploadPicture').set_value(DATA_DIR + '/IMG_1332.JPEG')
     browser.element('#currentAddress').should(be.blank).type(
         'Россия, г. Сызрань, Солнечная ул., д. 12 кв.137'
     )
