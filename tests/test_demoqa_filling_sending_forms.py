@@ -1,50 +1,56 @@
-from aqa_hm4_demoqa_tests.registration_page import RegistrationPage
-import allure
-from allure_commons.types import Severity
+from datetime import datetime
+import os
+from selene import browser, have, be
 
 
-@allure.tag("web")
-@allure.severity(Severity.MINOR)
-@allure.label("owner", "KING_PLANES")
-@allure.feature("Форма регистрации")
-@allure.story("Пользователь может заполнить форму и зарегистрироваться")
-@allure.description("Тестовая аннотация")
-@allure.suite("UI-Тесты")
-#@allure.title("Регистрация пользователя")
-@allure.link("https://demoqa.com/automation-practice-form", name="Testing")
 def test_filling_sending_forms():
-    registration_page = RegistrationPage()
-    # GIVEN
-    with allure.step("Открываем форму регистрации"):
-        registration_page.open()
+    browser.open('/')
+    # Для мест, где есть баннеры.
+    browser.driver.execute_script("$('#fixedban').remove()")
+    browser.driver.execute_script("$('footer').remove()")
+    browser.should(have.title('DEMOQA'))
 
-    # WHEN
-    with allure.step("Заполняем анкету и регистрируемся"):
-        registration_page.fill_first_name('Иван')
-        registration_page.fill_last_name('Иванов')
-        registration_page.fill_email('Ivan@mail.ru')
-        registration_page.fill_gender_male('Male')
-        registration_page.fill_phonenumber('8989567666')
-        registration_page.fill_dateOfBirth('February', '29', '1992')
-        registration_page.fill_subject('History')
-        registration_page.fill_hobbies('Sports', 'Reading', 'Music')
-        registration_page.fill_attachment('IMG_1332.JPEG')
-        registration_page.fill_address(
-            'Солнечная ул., д. 12 кв.137', 'Haryana', 'Karnal'
-        )
-        registration_page.fill_submit()
+    browser.element('#firstName').should(be.blank).type('Иван')
+    browser.element('#lastName').should(be.blank).type('Иванов')
+    browser.element('#userEmail').should(be.blank).type('Ivan@mail.ru')
+    browser.element('[for="gender-radio-1"]').click()
+    browser.element('#userNumber').should(be.blank).type('8989567666')
+    browser.element('#dateOfBirthInput').should(
+        have.value(datetime.now().strftime('%d %b %Y'))
+    ).click()
+    browser.element('.react-datepicker__month-select').element('[value="1"]').should(
+        have.exact_text('February')
+    ).click()
+    browser.element('.react-datepicker__year-select').element('[value="1992"]').should(
+        have.exact_text('1992')
+    ).click()
+    browser.all('.react-datepicker__week')[4].all('[role="option"]')[6].should(
+        have.exact_text('29')
+    ).click()
+    browser.element('#subjectsInput').type('History').press_enter()
+    browser.element('[for="hobbies-checkbox-1"]').click()
+    browser.element('[for="hobbies-checkbox-2"]').click()
+    browser.element('[for="hobbies-checkbox-3"]').click()
+    browser.element('#uploadPicture').send_keys(
+        os.path.abspath('../data/IMG_1332.JPEG')
+    )
+    browser.element('#currentAddress').should(be.blank).type(
+        'Россия, г. Сызрань, Солнечная ул., д. 12 кв.137'
+    )
+    browser.element('#state').click().element('#react-select-3-option-0').click()
+    browser.element('#city').click().element('#react-select-4-option-0').click()
+    browser.element('#submit').click()
 
-    # THEN
-    with allure.step("Проверяем регистрацию"):
-        registration_page.should_have_registered(
-            'Иван Иванов',
-            'Ivan@mail.ru',
-            'Male',
-            '8989567666',
-            '29 February,1992',
-            'History',
-            'Sports, Reading, Music',
-            'IMG_1332.JPEG',
-            'Солнечная ул., д. 12 кв.137',
-            'Haryana Karnal',
-        )
+    browser.element('.table').should(have.text('Иван Иванов'))
+    browser.element('.table').should(have.text('Ivan@mail.ru'))
+    browser.element('.table').should(have.text('Male'))
+    browser.element('.table').should(have.text('8989567666'))
+    browser.element('.table').should(have.text('29 February,1992'))
+    browser.element('.table').should(have.text('History'))
+    browser.element('.table').should(have.text('Sports, Reading, Music'))
+    browser.element('.table').should(have.text('IMG_1332.JPEG'))
+    browser.element('.table').should(
+        have.text('Россия, г. Сызрань, Солнечная ул., д. 12 кв.137')
+    )
+    browser.element('.table').should(have.text('NCR Delhi'))
+    browser.element('#closeLargeModal').click()
