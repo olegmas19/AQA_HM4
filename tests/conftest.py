@@ -13,8 +13,3 @@ def browser_open():
 
     yield
     browser.quit()
-
-
-def removing_banner():
-    browser.driver.execute_script("$('#fixedban').remove()")
-    browser.driver.execute_script("$('footer').remove()")
