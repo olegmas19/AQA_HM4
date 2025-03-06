@@ -10,7 +10,6 @@ class RegistrationPage:
 
     def open(self):
         browser.open('/')
-
         removing_banner()
 
     def fill_first_name(self, value):
