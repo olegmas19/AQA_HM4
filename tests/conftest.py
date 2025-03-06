@@ -2,12 +2,19 @@ import pytest
 from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
 from utils import attach
+from dotenv import load_dotenv
+import os
+
+
+@pytest.fixture(scope="session", autouse=True)
+def load_env():
+    load_dotenv()
 
 
 @pytest.fixture(scope="function", autouse=True)
 def setup_browser():
+
     browser.config.base_url = 'https://demoqa.com/automation-practice-form'
     driver_options = webdriver.ChromeOptions()
     driver_options.page_load_strategy = 'eager'
@@ -20,9 +27,13 @@ def setup_browser():
         "selenoid:options": {"enableVNC": True, "enableVideo": True},
     }
 
+    SELENOID_LOGIN = os.getenv("SELENOID_LOGIN")
+    SELENOID_PASS = os.getenv("SELENOID_PASS")
+    SELENOID_URL = os.getenv("SELENOID_URL")
+
     options.capabilities.update(selenoid_capabilities)
     browser.config.driver = webdriver.Remote(
-        command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        command_executor=f"https://{SELENOID_LOGIN}:{SELENOID_PASS}@{SELENOID_URL}/wd/hub",
         options=options,
     )
     yield browser
