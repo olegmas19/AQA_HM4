@@ -12,9 +12,18 @@ def load_env():
     load_dotenv()
 
 
-@pytest.fixture(scope="function", autouse=True)
-def setup_browser():
+def pytest_addoption(parser):
+    parser.addoption(
+        '--browser_version',
+        help='Версия браузера, в котором будут запускать тесты',
+        default='105.0',
+    )
 
+
+@pytest.fixture(scope="function", autouse=True)
+def setup_browser(load_env, request):
+
+    browser_version = request.config.getoption('--browser_version')
     browser.config.base_url = 'https://demoqa.com/automation-practice-form'
     driver_options = webdriver.ChromeOptions()
     driver_options.page_load_strategy = 'eager'
