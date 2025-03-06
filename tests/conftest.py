@@ -26,7 +26,7 @@ from selene import Browser, Config
 
 
 @pytest.fixture(scope="function")
-def setup_open(request):
+def setup_open():
     options = Options()
     selenoid_capabilities = {
         "browserName": "chrome",
