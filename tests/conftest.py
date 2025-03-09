@@ -3,7 +3,7 @@ from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# from utils import attach
+from utils import attach
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -30,10 +30,10 @@ def setup_browser():
     )
 
     yield
-    # attach.add_html(browser)
-    # attach.add_screenshot(browser)
-    # attach.add_logs(browser)
-    # attach.add_video(browser)
+    attach.add_html(browser)
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_video(browser)
     browser.quit()
 
 
