@@ -1,6 +1,17 @@
 from aqa_hm4_demoqa_tests.registration_page import RegistrationPage
+import allure
+from allure_commons.types import Severity
 
 
+@allure.tag("web")
+@allure.severity(Severity.MINOR)
+@allure.label("owner", "KING_PLANES")
+@allure.feature("Регистрация пользователя")
+@allure.story("Пользователь может заполнить форму и зарегистрироваться")
+@allure.description("Тестовая аннотация")
+@allure.suite("UI-Тесты")
+@allure.link("https://demoqa.com/automation-practice-form", name="Testing")
+@allure.title("Заполнение формы/Регистрация пользователя")
 def test_filling_sending_forms():
     registration_page = RegistrationPage()
     # GIVEN
