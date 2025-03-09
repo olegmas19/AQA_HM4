@@ -5,6 +5,7 @@ def test_filling_sending_forms():
     registration_page = RegistrationPage()
     # GIVEN
     registration_page.open()
+    registration_page.removing_banner()
 
     # WHEN
     registration_page.fill_first_name('Иван')

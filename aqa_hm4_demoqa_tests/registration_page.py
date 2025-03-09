@@ -2,14 +2,18 @@ from datetime import datetime
 from selene import browser, have, be
 from aqa_hm4_demoqa_tests import resourse
 from aqa_hm4_demoqa_tests.resourse import DATA_DIR
-from tests.conftest import removing_banner
+
+# from tests.conftest import removing_banner
 
 
 class RegistrationPage:
 
     def open(self):
         browser.open('/')
-        removing_banner()
+
+    def removing_banner(self):
+        browser.driver.execute_script("$('#fixedban').remove()")
+        browser.driver.execute_script("$('footer').remove()")
 
     def fill_first_name(self, value):
         browser.element('#firstName').should(be.blank).type(value)
