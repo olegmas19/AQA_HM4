@@ -1,6 +1,22 @@
+from enum import Enum
+
 import allure
 from selene import browser, have
 from aqa_hm4_demoqa_tests.resourse import DATA_DIR
+
+
+class Hobbies(Enum):
+    sports = "Sports"
+    reading = "Reading"
+    music = "Music"
+
+
+class Subjects(Enum):
+    history = "History"
+    english = "English"
+    maths = "Maths"
+    chemistry = "Chemistry"
+    physics = "Physics"
 
 
 def removing_banners():
@@ -74,11 +90,12 @@ class RegistrationPage:
     @allure.step("Заполняем поле - Mobile Number")
     def fill_phonenumber(self, number):
         browser.element('#userNumber').type(number)
+        removing_banners()
 
     @allure.step("Заполняем поле - Subjects")
-    def fill_subject(self, subject):
-        browser.element('#subjectsInput').type(subject).press_enter()
-        removing_banners()
+    def fill_subject(self, *subjects):
+        for subject in subjects:
+            browser.element('#subjectsInput').type(subject).press_enter()
 
     @allure.step("Заполняем поле - Hobbies")
     def fill_hobbies(self, hobbies1, hobbies2, hobbies3):
