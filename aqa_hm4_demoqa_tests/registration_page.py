@@ -78,10 +78,10 @@ class RegistrationPage:
     @allure.step("Заполняем поле - Subjects")
     def fill_subject(self, subject):
         browser.element('#subjectsInput').type(subject).press_enter()
+        removing_banners()
 
     @allure.step("Заполняем поле - Hobbies")
     def fill_hobbies(self, hobbies1, hobbies2, hobbies3):
-        removing_banners()
         browser.element('[for="hobbies-checkbox-1"]').should(
             have.text(hobbies1)
         ).click()

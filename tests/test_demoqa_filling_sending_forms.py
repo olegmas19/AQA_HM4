@@ -13,7 +13,7 @@ from allure_commons.types import Severity
 @allure.suite("UI-Тесты")
 @allure.link("https://demoqa.com/automation-practice-form", name="Testing")
 @allure.title("Заполнение формы/Регистрация пользователя")
-def test_filling_sending_forms():
+def test_filling_sending_forms(setup_browser):
     registration_page = RegistrationPage()
 
     # GIVEN
