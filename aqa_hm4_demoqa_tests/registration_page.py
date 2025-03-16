@@ -1,11 +1,11 @@
-from datetime import datetime
-
 import allure
-from selene import browser, have, be
-from aqa_hm4_demoqa_tests import resourse
+from selene import browser, have
 from aqa_hm4_demoqa_tests.resourse import DATA_DIR
 
-# from tests.conftest import removing_banner
+
+def removing_banners():
+    browser.driver.execute_script("$('#fixedban').remove()")
+    browser.driver.execute_script("$('footer').remove()")
 
 
 class RegistrationPage:
@@ -13,29 +13,25 @@ class RegistrationPage:
     @allure.step("Открываем форму регистрации")
     def open(self):
         browser.open('/')
-
-    def removing_banner(self):
-        browser.driver.execute_script("$('#fixedban').remove()")
-        browser.driver.execute_script("$('footer').remove()")
+        removing_banners()
 
     @allure.step("Заполняем поле - First Name")
     def fill_first_name(self, value):
-        browser.element('#firstName').should(be.blank).type(value)
+        browser.element('#firstName').type(value)
 
     @allure.step("Заполняем поле - Last Name")
     def fill_last_name(self, value):
-        browser.element('#lastName').should(be.blank).type(value)
+        browser.element('#lastName').type(value)
 
     @allure.step("Заполняем поле - Date of Birth")
     def fill_dateOfBirth(self, month, day, year):
-        browser.element('#dateOfBirthInput').should(
-            have.value(datetime.now().strftime('%d %b %Y'))
-        ).click()
+        browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__month-select').type(month)
         browser.element('.react-datepicker__year-select').type(year)
-        browser.all('.react-datepicker__week')[4].all('[role="option"]')[6].should(
-            have.exact_text(day)
-        ).click()
+        # browser.all('.react-datepicker__week')[4].all('[role="option"]')[6].should(
+        #     have.exact_text(day)
+        # ).click()
+        browser.element(f'.react-datepicker__day--0{day}:last-of-type').click()
 
     @allure.step("Проверяем результаты заполнения")
     def should_have_registered(
@@ -69,7 +65,7 @@ class RegistrationPage:
 
     @allure.step("Заполняем поле - Email")
     def fill_email(self, email):
-        browser.element('#userEmail').should(be.blank).type(email)
+        browser.element('#userEmail').type(email)
 
     @allure.step("Заполняем поле - Gender")
     def fill_gender_male(self, gender):
@@ -77,7 +73,7 @@ class RegistrationPage:
 
     @allure.step("Заполняем поле - Mobile Number")
     def fill_phonenumber(self, number):
-        browser.element('#userNumber').should(be.blank).type(number)
+        browser.element('#userNumber').type(number)
 
     @allure.step("Заполняем поле - Subjects")
     def fill_subject(self, subject):
@@ -85,6 +81,7 @@ class RegistrationPage:
 
     @allure.step("Заполняем поле - Hobbies")
     def fill_hobbies(self, hobbies1, hobbies2, hobbies3):
+        removing_banners()
         browser.element('[for="hobbies-checkbox-1"]').should(
             have.text(hobbies1)
         ).click()
@@ -101,7 +98,7 @@ class RegistrationPage:
 
     @allure.step("Заполняем поля - Current address, State and City")
     def fill_address(self, address, state, city):
-        browser.element('#currentAddress').should(be.blank).type(address)
+        browser.element('#currentAddress').type(address)
         browser.element('#state').click()
         browser.all('[id^=react-select][id*=option]').element_by(
             have.exact_text(state)

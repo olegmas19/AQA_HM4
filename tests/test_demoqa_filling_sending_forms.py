@@ -1,3 +1,4 @@
+from selene import browser
 from aqa_hm4_demoqa_tests.registration_page import RegistrationPage
 import allure
 from allure_commons.types import Severity
@@ -14,9 +15,9 @@ from allure_commons.types import Severity
 @allure.title("Заполнение формы/Регистрация пользователя")
 def test_filling_sending_forms():
     registration_page = RegistrationPage()
+
     # GIVEN
     registration_page.open()
-    registration_page.removing_banner()
 
     # WHEN
     registration_page.fill_first_name('Иван')
